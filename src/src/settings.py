@@ -31,7 +31,8 @@ INSTALLED_APPS = [
     'rest_framework',
 
     # project apps
-    'employee'
+    'employee',
+    'my_test',
 ]
 
 MIDDLEWARE = [

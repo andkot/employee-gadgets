@@ -6,6 +6,7 @@ urlpatterns = [
 
     # rest api
     path('api/employee/', include('employee.api.urls')),
+    path('api/my_test/', include('my_test.api.urls')),
 
     # inner api
 ]
