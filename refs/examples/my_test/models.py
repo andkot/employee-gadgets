@@ -6,4 +6,4 @@ class Model_1(models.Model):
     field_1 = models.CharField(max_length=255)
 
     def __str__(self):
-        return f'{self.id}; {self.field_1}'
+        return f'; {self.field_1}'
