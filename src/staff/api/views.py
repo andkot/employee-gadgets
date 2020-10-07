@@ -86,3 +86,24 @@ class EmployeeView(ModelViewSet):
 class DeviceView(ModelViewSet):
     queryset = Device.objects.all()
     serializer_class = DeviceSerializer
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        current = self.get_serializer(instance)
+        last_user = current.data['current_user']
+        res = {}
+        for elem in request.data:
+            if request.data[str(elem)]:
+                res[str(elem)] = request.data[str(elem)]
+        res['last_user'] = last_user
+        serializer = self.get_serializer(instance, data=res, partial=True)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        if getattr(instance, '_prefetched_objects_cache', None):
+            # If 'prefetch_related' has been applied to a queryset, we need to
+            # refresh the instance from the database.
+            instance = self.get_object()
+            serializer = self.get_serializer(instance)
+
+        return Response(serializer.data)

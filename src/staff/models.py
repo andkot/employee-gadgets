@@ -66,6 +66,7 @@ class Device(models.Model):
     category = models.IntegerField(choices=CATEGORIES, default=1)
     image = models.ImageField(null=True)
     current_user = models.ForeignKey(Employee, default=None, null=True, on_delete=models.SET_NULL)
+    last_user = models.CharField(max_length=255, default=None)
 
     def __str__(self):
         return self.name
