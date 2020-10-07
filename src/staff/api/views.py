@@ -2,20 +2,19 @@ from .serializers import (EmployeeDetailsSerializer,
                           EmployeeSerializer,
                           DeviceSerializer, )
 from ..models import Employee, Device
-from .permissions import IsOwnerOrReadOnly
+# from .permissions import IsOwnerOrReadOnly
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework import status
-from rest_framework.authentication import  BasicAuthentication
 
 
 class EmployeeView(ModelViewSet):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
 
-    authentication_classes = [BasicAuthentication]
-    permission_classes = [IsOwnerOrReadOnly]
+    # authentication_classes = [BasicAuthentication]
+    # permission_classes = [IsOwnerOrReadOnly]
 
     @action(detail=True, methods=['GET'])
     def devices(self, request, pk=None):
@@ -36,8 +35,8 @@ class EmployeeView(ModelViewSet):
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
-        # must improve !!!
 
+        # must improve !!!
         result = dict(serializer.data)
         result['available devices'] = f'{serializer.data["url"]}devices'
         del result['url']

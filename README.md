@@ -6,5 +6,5 @@ linux comands:
 2. sudo docker-compose build
 3. sudo docker-compose exec web python src/manage.py makemigrations --noinput
 4. sudo docker-compose exec web python src/manage.py migrate --noinput
-5. sudo docker-compose up -d --build
+5. sudo docker-compose up -d --buildt
 

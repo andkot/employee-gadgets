@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
+
 class EmployeeManager(BaseUserManager):
     def create_user(self, email, name, password):
         if not email:

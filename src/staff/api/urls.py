@@ -5,7 +5,6 @@ from rest_framework import routers
 
 router = routers.SimpleRouter()
 router.register('employees', EmployeeView)
-# router.register('', EmployeeAuthView, basename='login')
 router.register('devices', DeviceView)
 
 urlpatterns = [
