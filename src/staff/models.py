@@ -1,20 +1,10 @@
 from django.db import models
-from django.contrib.auth.models import User
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
-
 
 class EmployeeManager(BaseUserManager):
     def create_user(self, email, name, password):
         if not email:
             raise ValueError('You must have email address!')
-        # if not username:
-        #     raise ValueError('You must have username')
-        # if not first_name:
-        #     raise ValueError('You must have first name!')
-        # if not last_name:
-        #     raise ValueError('You must have last name!')
         if not password:
             raise ValueError('You must have password!')
 

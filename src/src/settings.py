@@ -8,12 +8,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'kk8&eo)jwa&j^m=s(gc_j7vn+#m3p#3337pug@#f@12mje5&1z'
+# SECRET_KEY = 'kk8&eo)jwa&j^m=s(gc_j7vn+#m3p#3337pug@#f@12mje5&1z'
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+DEBUG = int(os.environ.get("DEBUG", default=0))
 
-ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(' ')
 
 # Application definition
 
@@ -28,14 +31,23 @@ INSTALLED_APPS = [
 
     # rest_framework app
     'rest_framework',
+    'rest_framework.authtoken',
 
     # for JS (in header HTTP request)
     'corsheaders',
 
+    # djoser
+    'djoser',
+
     # project apps
     'staff',
-    # 'devices',
 ]
+
+# Authentication backends
+AUTHENTICATION_BACKENDS = (
+    # 'staff.models.EmployeeBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -69,7 +81,10 @@ TEMPLATES = [
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authtoken',
     ]
 }
 
@@ -99,10 +114,10 @@ WSGI_APPLICATION = 'src.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',
-        'USER': 'postgres',  # Not used with sqlite3.
-        'PASSWORD': '091294',  # Not used with sqlite3.
-        'HOST': 'localhost',  # Set to empty string for localhost. Not used with sqlite3.
+        'NAME': 'employee_devices',
+        'USER': 'employee_devices_user',  # Not used with sqlite3.
+        'PASSWORD': 'password',  # Not used with sqlite3.
+        'HOST': 'db',  #  (docker - db)
         'PORT': '5432',  # Set to empty string
     }
 }
